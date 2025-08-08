@@ -34,4 +34,11 @@ jobs:
         run: php artisan key:generate
 
       - name: Tests
-        run: ./vendor/bin/pest
+        run: ./vendor/bin/pest --coverage-clover ./coverage.xml
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          verbose: true
