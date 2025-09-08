@@ -9,4 +9,4 @@ parameters:
     paths:
         - app/
 
-    level: 5
+    level: 8
