@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->randomFloat(2, 5, 500),
             'stock_qty' => $this->faker->numberBetween(0, 100),
-            'sku' => strtoupper($this->faker->bothify('SKU-####')),
+            'sku' => strtoupper($this->faker->unique()->bothify('SKU-####')),
             'is_active' => true,
         ];
     }
