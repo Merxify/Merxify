@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\EnsureEmailIsVerifiedMiddleware;
 use App\Http\Middleware\UpdateSanctumTokenMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
