@@ -18,11 +18,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin user
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@merxify.test',
-            'role' => 'admin',
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+            UserSeeder::class,
         ]);
 
         // Customers
