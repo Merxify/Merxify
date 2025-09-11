@@ -67,6 +67,12 @@
     ],
     "phpstan": [
       "./vendor/bin/phpstan analyse --memory-limit=2G"
+    ],
+    "verify": [
+      "@php artisan config:clear --ansi",
+      "@composer pint",
+      "@composer phpstan",
+      "@php artisan test --coverage"
     ]
   },
   "extra": {

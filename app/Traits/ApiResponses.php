@@ -26,26 +26,19 @@ trait ApiResponses
         ], $statusCode);
     }
 
-    //    protected function error(mixed $errors = [], int $statusCode = 0): JsonResponse
-    //    {
-    //        if (is_string($errors)) {
-    //            return response()->json([
-    //                'message' => $errors,
-    //                'status' => $statusCode,
-    //            ], $statusCode);
-    //        }
-    //
-    //        return response()->json([
-    //            'errors' => $errors,
-    //        ]);
-    //    }
+    protected function error(mixed $errors = [], int $statusCode = 0): JsonResponse
+    {
+        return response()->json([
+            'errors' => $errors,
+        ], $statusCode);
+    }
 
-    //    protected function notAuthorized(string $message): JsonResponse
-    //    {
-    //        return $this->error([
-    //            'message' => $message,
-    //            'status' => 401,
-    //            'source' => '',
-    //        ]);
-    //    }
+    protected function notAuthorized(string $message): JsonResponse
+    {
+        return $this->error([
+            'message' => $message,
+            'status' => 401,
+            'source' => '',
+        ], 401);
+    }
 }
