@@ -29,6 +29,10 @@ class Product extends Model
         'is_active',
     ];
 
+    protected $with = [
+        'category',
+    ];
+
     /**
      * @return BelongsTo<Category, $this>
      */

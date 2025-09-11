@@ -9,7 +9,7 @@ test('reset password link can be requested', function () {
 
     $user = User::factory()->create();
 
-    $this->postJson('/api/forgot-password', ['email' => $user->email]);
+    $this->postJson('/api/v1/auth/forgot-password', ['email' => $user->email]);
 
     Notification::assertSentTo($user, ResetPassword::class);
 });
@@ -19,10 +19,10 @@ test('password can be reset with valid token', function () {
 
     $user = User::factory()->create();
 
-    $this->postJson('/api/forgot-password', ['email' => $user->email]);
+    $this->postJson('/api/v1/auth/forgot-password', ['email' => $user->email]);
 
     Notification::assertSentTo($user, ResetPassword::class, function (object $notification) use ($user) {
-        $response = $this->post('/api/reset-password', [
+        $response = $this->post('/api/v1/auth/reset-password', [
             'token' => $notification->token,
             'email' => $user->email,
             'password' => 'password',
@@ -40,7 +40,7 @@ test('password can be reset with valid token', function () {
 test('password cannot be reset with invalid token', function () {
     $user = User::factory()->create();
 
-    $response = $this->postJson('/api/reset-password', [
+    $response = $this->postJson('/api/v1/auth/reset-password', [
         'token' => 'invalid-token',
         'email' => $user->email,
         'password' => 'password',

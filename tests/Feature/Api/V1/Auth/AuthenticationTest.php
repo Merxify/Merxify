@@ -7,7 +7,7 @@ use Laravel\Sanctum\Sanctum;
 test('users can authenticate', function () {
     $user = User::factory()->create();
 
-    $response = $this->postJson('/api/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => $user->email,
         'password' => 'password',
     ]);
@@ -28,7 +28,7 @@ test('users can authenticate', function () {
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $response = $this->postJson('/api/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
@@ -53,7 +53,7 @@ test('users can logout', function () {
         ['*'],
     );
 
-    $response = $this->postJson('/api/logout');
+    $response = $this->postJson('/api/v1/auth/logout');
 
     $response->assertOk();
 
@@ -65,7 +65,7 @@ test('users are rate limited', function () {
 
     RateLimiter::increment(implode('|', [$user->email, '127.0.0.1']), amount: 10);
 
-    $response = $this->postJson('/api/login', [
+    $response = $this->postJson('/api/v1/auth/login', [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);

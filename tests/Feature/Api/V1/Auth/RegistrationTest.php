@@ -3,7 +3,7 @@
 use App\Models\User;
 
 test('new users can register', function () {
-    $response = $this->postJson('/api/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password',
@@ -31,7 +31,7 @@ test('new users cannot register with same email', function () {
         'email' => 'test@example.com',
     ]);
 
-    $response = $this->postJson('/api/register', [
+    $response = $this->postJson('/api/v1/auth/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password',
