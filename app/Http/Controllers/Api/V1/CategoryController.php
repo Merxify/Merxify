@@ -17,13 +17,9 @@ class CategoryController extends ApiController
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse|AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
-        if ($this->isAble('viewAny', Category::class)) {
-            return CategoryResource::collection(Category::all());
-        }
-
-        return $this->notAuthorized('You are not authorized to view these resources.');
+        return CategoryResource::collection(Category::all());
     }
 
     /**
@@ -41,13 +37,9 @@ class CategoryController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Category $category): CategoryResource|JsonResponse
+    public function show(Category $category): CategoryResource
     {
-        if ($this->isAble('view', Category::class)) {
-            return new CategoryResource($category);
-        }
-
-        return $this->notAuthorized('You are not authorized to view this resource.');
+        return new CategoryResource($category);
     }
 
     /**

@@ -26,7 +26,7 @@ class CategoryFactory extends Factory
             'description' => $this->faker->text(),
             'meta_title' => $this->faker->unique()->word(),
             'meta_description' => $this->faker->text(),
-            'meta_keywords' => $this->faker->unique()->words(),
+            'meta_keywords' => $this->faker->unique()->words(3, true),
             'is_active' => $this->faker->boolean(),
             'parent_id' => null,
         ];
