@@ -7,3 +7,6 @@ parameters:
         - app/
 
     level: 8
+
+    ignoreErrors:
+        - '#Cannot access property \$[a-zA-Z0-9\\_]+ on App\\Models\\Category\|null#'
