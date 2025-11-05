@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Auth\NewPasswordController;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Api\V1\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 // Auth Routes
@@ -23,5 +24,13 @@ Route::prefix('auth')->group(function () {
         Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
             ->name('verification.send');
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+    });
+});
+
+// Admin Routes
+Route::prefix('admin')->group(function () {
+    // Category Routes
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::apiResource('categories', CategoryController::class);
     });
 });
