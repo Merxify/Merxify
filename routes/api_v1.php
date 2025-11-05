@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Api\V1\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // Auth Routes
@@ -29,8 +30,10 @@ Route::prefix('auth')->group(function () {
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
-    // Category Routes
     Route::middleware('auth:sanctum')->group(function () {
+        // Category Routes
         Route::apiResource('categories', CategoryController::class);
+        // Product Routes
+        Route::apiResource('products', ProductController::class);
     });
 });

@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class CategoryPolicy
+class ProductPolicy
 {
     /**
      * Determine whether the user can create models.
