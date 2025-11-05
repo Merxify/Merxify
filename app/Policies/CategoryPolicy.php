@@ -2,6 +2,8 @@
 
 namespace App\Policies;
 
+use App\Models\User;
+
 class CategoryPolicy
 {
     /**
@@ -23,40 +25,24 @@ class CategoryPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(): bool
+    public function create(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(): bool
+    public function update(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(): bool
+    public function delete(User $user): bool
     {
-        return true;
+        return $user->isAdmin();
     }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    //    public function restore(): bool
-    //    {
-    //        return true;
-    //    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    //    public function forceDelete(): bool
-    //    {
-    //        return true;
-    //    }
 }

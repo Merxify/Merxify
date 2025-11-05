@@ -12,9 +12,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Admin User
         User::factory()->create([
-            'name' => 'Vasileios Ntoufoudis',
-            'email' => 'info@ntoufoudis.com',
+            'name' => 'Site Admin',
+            'email' => 'admin@merxify.app',
+            'group' => 'admin',
+        ]);
+
+        // Customer User
+        User::factory()->create([
+            'name' => 'Site Customer',
+            'email' => 'customer@merxify.app',
         ]);
     }
 }

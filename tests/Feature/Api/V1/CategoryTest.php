@@ -2,15 +2,23 @@
 
 use App\Models\Category;
 use App\Models\User;
-use Database\Seeders\DatabaseSeeder;
+use Database\Seeders\CategorySeeder;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Sanctum\Sanctum;
 
+beforeEach(function () {
+    $this->user = User::factory()->create([
+        'name' => 'Site Admin',
+        'email' => 'admin@merxify.app',
+        'group' => 'admin',
+    ]);
+});
+
 it('can show all categories', function () {
-    $this->seed(DatabaseSeeder::class);
+    $this->seed(CategorySeeder::class);
 
     $user = Sanctum::actingAs(
-        User::factory()->create(),
+        $this->user,
         ['*'],
     );
     $response = $this
@@ -24,10 +32,10 @@ it('can show all categories', function () {
 });
 
 it('can show single category', function () {
-    $this->seed(DatabaseSeeder::class);
+    $this->seed(CategorySeeder::class);
 
     $user = Sanctum::actingAs(
-        User::factory()->create(),
+        $this->user,
         ['*'],
     );
 
@@ -48,7 +56,7 @@ it('can show single category', function () {
 
 it('can create new category', function () {
     $user = Sanctum::actingAs(
-        User::factory()->create(),
+        $this->user,
         ['*'],
     );
 
@@ -73,7 +81,7 @@ it('can create new category', function () {
 
 it('can update a category', function () {
     $user = Sanctum::actingAs(
-        User::factory()->create(),
+        $this->user,
         ['*'],
     );
 
@@ -102,7 +110,7 @@ it('can update a category', function () {
 
 it('can delete a category', function () {
     $user = Sanctum::actingAs(
-        User::factory()->create(),
+        $this->user,
         ['*'],
     );
 
