@@ -6,7 +6,8 @@ use Laravel\Sanctum\Sanctum;
 
 it('can perform full crud on categories if admin', function () {
     $admin = User::factory()->create([
-        'name' => 'Site Admin',
+        'first_name' => 'Admin',
+        'last_name' => 'User',
         'email' => 'admin@merxify.app',
         'group' => 'admin',
     ]);
@@ -60,7 +61,8 @@ it('can perform full crud on categories if admin', function () {
 
 it('can only view categories if customer', function () {
     $customer = User::factory()->create([
-        'name' => 'Site Customer',
+        'first_name' => 'Customer',
+        'last_name' => 'User',
         'email' => 'customer@merxify.app',
     ]);
 

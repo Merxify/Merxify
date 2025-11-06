@@ -9,7 +9,8 @@ use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
     $this->user = User::factory()->create([
-        'name' => 'Site Admin',
+        'first_name' => 'Admin',
+        'last_name' => 'User',
         'email' => 'admin2@merxify.app',
         'group' => 'admin',
     ]);
