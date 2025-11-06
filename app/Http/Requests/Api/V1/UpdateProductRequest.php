@@ -22,20 +22,17 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'slug' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'slug' => ['sometimes', 'string', 'max:255', 'unique:products,slug'],
             'description' => ['nullable', 'string'],
             'short_description' => ['nullable', 'string'],
-            'meta_title' => ['sometimes', 'string'],
-            'meta_description' => ['sometimes', 'string'],
-            'meta_keywords' => ['nullable', 'string'],
-            'is_active' => ['nullable', 'boolean'],
-            'sku' => ['sometimes', 'string'],
-            'price' => ['sometimes', 'numeric'],
-            'weight' => ['sometimes', 'numeric'],
-            'quantity' => ['sometimes', 'numeric'],
-            'dimensions' => ['sometimes', 'array'],
-            'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
+            'sku' => ['sometimes', 'string', 'unique:products,sku'],
+            'type' => ['sometimes', 'in:simple,configurable,bundle,digital'],
+            'status' => ['sometimes', 'in:draft,active,inactive,out_of_stock'],
+            'price' => ['sometimes', 'numeric', 'min:0'],
+            'weight' => ['nullable', 'numeric', 'min:0'],
+            'category_ids' => ['nullable', 'array'],
+            'category_ids.*' => ['exists:categories,id'],
         ];
     }
 }

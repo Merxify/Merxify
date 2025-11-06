@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources\V1;
 
-use App\Models\Product;
+use App\Models\Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin Product */
-class ProductResource extends JsonResource
+/** @mixin Attribute */
+class AttributeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,24 +17,19 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'product',
+            'type' => 'attribute',
             'id' => $this->id,
             'attributes' => [
                 'name' => $this->name,
                 'slug' => $this->slug,
-                'description' => $this->description,
-                'short_description' => $this->short_description,
-                'sku' => $this->sku,
                 'type' => $this->type,
-                'status' => $this->status,
-                'price' => $this->price,
-                'weight' => $this->weight,
-                'dimensions' => $this->dimensions,
-                'meta_data' => $this->meta_data,
+                'is_required' => $this->is_required,
+                'is_filterable' => $this->is_filterable,
+                'is_variant' => $this->is_variant,
                 'options' => $this->options,
             ],
             'links' => [
-                'self' => route('products.show', ['product' => $this->id]),
+                'self' => route('attributes.show', ['attribute' => $this->id]),
             ],
         ];
     }

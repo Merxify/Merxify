@@ -35,7 +35,5 @@ class UserSeeder extends Seeder
             // Make first address default
             $addresses->first()?->update(['is_default' => true]);
         });
-
-        $this->command->info('Created users: 1 admin, 50 customers with addresses.');
     }
 }
