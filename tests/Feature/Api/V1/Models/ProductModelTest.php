@@ -1,101 +1,70 @@
 <?php
 
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariant;
 
-beforeEach(function () {
-    $this->category = Category::factory()->create();
+it('can get relationship with category model', function () {
+    $categories = Category::factory()->count(3)->create();
+    $product = Product::factory()->create();
+    $product->categories()->attach($categories);
+
+    $this->assertEquals($product->categories()->count(), 3);
 });
 
-it('can create a new product', function () {
-    $product = Product::create([
-        'name' => 'Cameras Product 1',
-        'description' => 'This is a sample description for Cameras Product 1, part of the Cameras collection.',
-        'short_description' => 'High-quality cameras item.',
-        'slug' => 'cameras-product-1',
-        'sku' => 'CAM001-FE0D5',
-        'price' => 1070.14,
-        'weight' => 4.69,
-        'quantity' => 72,
-        'dimensions' => [
-            'length' => 40.5,
-            'width' => 39.0,
-            'height' => 10.8,
-            'unit' => 'cm',
-        ],
-        'category_id' => $this->category->id,
-        'meta_title' => 'Cameras Product 1 | Cameras',
-        'meta_description' => 'Buy Cameras Product 1 from our Cameras range. Best prices and top quality guaranteed.',
-        'meta_keywords' => 'cameras, cameras product 1, online store',
-    ]);
+it('can get relationship with attribute model', function () {
+    $attributes = Attribute::factory(3)->create();
+    $product = Product::factory()->create();
 
-    $this->assertDatabaseCount('products', 1);
+    foreach ($attributes as $attribute) {
+        $product->attributes()->attach($attribute, ['value' => $attribute->type]);
+    }
 
-    $this->assertDatabaseHas('products', [
-        'id' => $product->id,
-    ]);
+    $this->assertEquals($product->attributes()->count(), 3);
 });
 
-it('can update a product', function () {
-    $product = Product::create([
-        'name' => 'Cameras Product 1',
-        'description' => 'This is a sample description for Cameras Product 1, part of the Cameras collection.',
-        'short_description' => 'High-quality cameras item.',
-        'slug' => 'cameras-product-1',
-        'sku' => 'CAM001-FE0D5',
-        'price' => 1070.14,
-        'weight' => 4.69,
-        'quantity' => 72,
-        'dimensions' => [
-            'length' => 40.5,
-            'width' => 39.0,
-            'height' => 10.8,
-            'unit' => 'cm',
-        ],
-        'category_id' => $this->category->id,
-        'meta_title' => 'Cameras Product 1 | Cameras',
-        'meta_description' => 'Buy Cameras Product 1 from our Cameras range. Best prices and top quality guaranteed.',
-        'meta_keywords' => 'cameras, cameras product 1, online store',
+it('can get relationship with product variant model', function () {
+    $product = Product::factory()->create();
+    ProductVariant::factory(5)->create([
+        'product_id' => $product->id,
     ]);
 
-    $product->update([
-        'name' => 'Product 2',
-    ]);
-
-    $this->assertDatabaseCount('products', 1);
-
-    $this->assertDatabaseHas('products', [
-        'name' => 'Product 2',
-    ]);
+    $this->assertEquals($product->variants()->count(), 5);
 });
 
-it('can delete a product', function () {
-    $product = Product::create([
-        'name' => 'Cameras Product 1',
-        'description' => 'This is a sample description for Cameras Product 1, part of the Cameras collection.',
-        'short_description' => 'High-quality cameras item.',
-        'slug' => 'cameras-product-1',
-        'sku' => 'CAM001-FE0D5',
-        'price' => 1070.14,
-        'weight' => 4.69,
-        'quantity' => 72,
-        'dimensions' => [
-            'length' => 40.5,
-            'width' => 39.0,
-            'height' => 10.8,
-            'unit' => 'cm',
-        ],
-        'category_id' => $this->category->id,
-        'meta_title' => 'Cameras Product 1 | Cameras',
-        'meta_description' => 'Buy Cameras Product 1 from our Cameras range. Best prices and top quality guaranteed.',
-        'meta_keywords' => 'cameras, cameras product 1, online store',
+it('can query active product model', function () {
+    Product::factory()->count(5)->create([
+        'status' => 'active',
     ]);
 
-    $product->delete();
-
-    $this->assertDatabaseCount('products', 0);
-
-    $this->assertDatabaseMissing('products', [
-        'id' => $product->id,
+    Product::factory()->count(3)->create([
+        'status' => 'draft',
     ]);
+
+    $this->assertEquals(5, Product::active()->count());
+});
+
+it('can query simple product model', function () {
+    Product::factory()->count(5)->create([
+        'type' => 'simple',
+    ]);
+
+    Product::factory()->count(3)->create([
+        'type' => 'digital',
+    ]);
+
+    $this->assertEquals(5, Product::simple()->count());
+});
+
+it('can query configurable product model', function () {
+    Product::factory()->count(5)->create([
+        'type' => 'configurable',
+    ]);
+
+    Product::factory()->count(3)->create([
+        'type' => 'digital',
+    ]);
+
+    $this->assertEquals(5, Product::configurable()->count());
 });

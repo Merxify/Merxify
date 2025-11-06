@@ -22,20 +22,17 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'slug' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255', 'unique:products,slug'],
             'description' => ['nullable', 'string'],
             'short_description' => ['nullable', 'string'],
-            'meta_title' => ['required', 'string'],
-            'meta_description' => ['required', 'string'],
-            'meta_keywords' => ['nullable', 'string'],
-            'is_active' => ['nullable', 'boolean'],
-            'sku' => ['required', 'string'],
-            'price' => ['required', 'numeric'],
-            'weight' => ['required', 'numeric'],
-            'quantity' => ['required', 'numeric'],
-            'dimensions' => ['required', 'array'],
-            'category_id' => ['required', 'integer', 'exists:categories,id'],
+            'sku' => ['required', 'string', 'unique:products,sku'],
+            'type' => ['required', 'in:simple,configurable,bundle,digital'],
+            'status' => ['required', 'in:draft,active,inactive,out_of_stock'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'weight' => ['nullable', 'numeric', 'min:0'],
+            'category_ids' => ['nullable', 'array'],
+            'category_ids.*' => ['exists:categories,id'],
         ];
     }
 }
