@@ -4,7 +4,8 @@ use App\Models\User;
 
 it('can register new users', function () {
     $response = $this->postJson('/api/v1/auth/register', [
-        'name' => 'John Doe',
+        'first_name' => 'John',
+        'last_name' => 'Doe',
         'email' => 'john@merxify.com',
         'password' => 'password',
         'password_confirmation' => 'password',
@@ -21,7 +22,8 @@ it('can register new users', function () {
         ]);
 
     $this->assertDatabaseHas('users', [
-        'name' => 'John Doe',
+        'first_name' => 'John',
+        'last_name' => 'Doe',
         'email' => 'john@merxify.com',
     ]);
 });
@@ -32,7 +34,8 @@ it('cannot register new users with same email', function () {
     ]);
 
     $response = $this->postJson('/api/v1/auth/register', [
-        'name' => 'John Doe',
+        'first_name' => 'John',
+        'last_name' => 'Doe',
         'email' => 'john@merxify.com',
         'password' => 'password',
         'password_confirmation' => 'password',
@@ -49,6 +52,7 @@ it('cannot register new users with same email', function () {
         ]);
 
     $this->assertDatabaseMissing('users', [
-        'name' => 'John Doe',
+        'first_name' => 'John',
+        'last_name' => 'Doe',
     ]);
 });

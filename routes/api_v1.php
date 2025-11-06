@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AddressController;
 use App\Http\Controllers\Api\V1\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Api\V1\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Api\V1\Auth\NewPasswordController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Api\V1\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Auth Routes
@@ -35,5 +37,9 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('categories', CategoryController::class);
         // Product Routes
         Route::apiResource('products', ProductController::class);
+        // User Routes
+        Route::apiResource('users', UserController::class);
+        // Address Routes
+        Route::apiResource('addresses', AddressController::class);
     });
 });

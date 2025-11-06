@@ -11,7 +11,8 @@ beforeEach(function () {
 
 it('can perform full crud on products if admin', function () {
     $admin = User::factory()->create([
-        'name' => 'Site Admin',
+        'first_name' => 'Admin',
+        'last_name' => 'User',
         'email' => 'admin@merxify.app',
         'group' => 'admin',
     ]);
@@ -78,7 +79,8 @@ it('can perform full crud on products if admin', function () {
 
 it('can only view products if customer', function () {
     $customer = User::factory()->create([
-        'name' => 'Site Customer',
+        'first_name' => 'Admin',
+        'last_name' => 'User',
         'email' => 'customer@merxify.app',
     ]);
 
