@@ -46,12 +46,10 @@ it('can show single user', function () {
         ->getJson("/api/v1/admin/users/$user1->id");
 
     $response
-        ->assertJson(fn (AssertableJson $json) => $json->has('data', 4)
-            ->where('data.type', 'user')
-            ->where('data.id', $user1->id)
-            ->where('data.attributes.first_name', $user1->first_name)
-        )
-        ->assertStatus(200);
+        ->assertStatus(200)
+        ->assertExactJsonStructure(['data'])
+        ->assertJsonPath('data.email', $user1->email)
+        ->assertJsonPath('data.first_name', $user1->first_name);
 });
 
 it('can create new user', function () {
@@ -71,12 +69,10 @@ it('can create new user', function () {
         ]);
 
     $response
-        ->assertJson(fn (AssertableJson $json) => $json->has('data', 4)
-            ->where('data.type', 'user')
-            ->where('data.id', 2)
-            ->where('data.attributes.email', 'john@doe.com')
-        )
-        ->assertStatus(201);
+        ->assertStatus(201)
+        ->assertExactJsonStructure(['data'])
+        ->assertJsonPath('data.email', 'john@doe.com')
+        ->assertJsonPath('data.first_name', 'John');
 });
 
 it('can update a user', function () {
@@ -99,13 +95,10 @@ it('can update a user', function () {
         ]);
 
     $response
-        ->assertJson(fn (AssertableJson $json) => $json->has('data', 4)
-            ->where('data.type', 'user')
-            ->where('data.id', $newUser->id)
-            ->where('data.attributes.first_name', 'Jane')
-            ->where('data.attributes.email', $newUser->email)
-        )
-        ->assertStatus(200);
+        ->assertStatus(200)
+        ->assertExactJsonStructure(['data'])
+        ->assertJsonPath('data.email', 'john@doe.com')
+        ->assertJsonPath('data.first_name', 'Jane');
 });
 
 it('can delete a user', function () {

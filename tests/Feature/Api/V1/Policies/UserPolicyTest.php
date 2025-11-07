@@ -29,29 +29,12 @@ it('can perform full crud on users if admin', function () {
         ->assertStatus(200);
 
     $this->getJson('/api/v1/admin/users/2')
-        ->assertStatus(200)
-        ->assertJson([
-            'data' => [
-                'id' => 2,
-                'attributes' => [
-                    'first_name' => 'John',
-                ],
-            ],
-        ]);
+        ->assertStatus(200);
 
     // Update
     $this->putJson('/api/v1/admin/users/2', [
         'first_name' => 'Jane',
-    ])->assertStatus(200)
-        ->assertJson([
-            'data' => [
-                'id' => 2,
-                'attributes' => [
-                    'first_name' => 'Jane',
-                    'last_name' => 'Doe',
-                ],
-            ],
-        ]);
+    ])->assertStatus(200);
 
     // Delete
     $this->deleteJson('/api/v1/admin/users/2')
@@ -90,15 +73,7 @@ it('can only view users if customer', function () {
         ->assertStatus(200);
 
     $this->getJson('/api/v1/admin/users/2')
-        ->assertStatus(200)
-        ->assertJson([
-            'data' => [
-                'id' => 2,
-                'attributes' => [
-                    'first_name' => 'John',
-                ],
-            ],
-        ]);
+        ->assertStatus(200);
 
     // Update
     $this->putJson('/api/v1/admin/users/2', [

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ProductVariantController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -55,6 +56,14 @@ Route::prefix('admin')->group(function () {
             Route::put('items/{id}', [CartController::class, 'updateItem']);
             Route::delete('items/{id}', [CartController::class, 'removeItem']);
             Route::delete('clear', [CartController::class, 'clear']);
+        });
+        // Orders
+        Route::prefix('orders')->group(function () {
+            Route::get('/', [OrderController::class, 'index']);
+            Route::post('/', [OrderController::class, 'store']);
+            Route::get('{id}', [OrderController::class, 'show']);
+            Route::post('{id}/cancel', [OrderController::class, 'cancel']);
+            Route::put('{id}/status', [OrderController::class, 'updateStatus']);
         });
     });
 });

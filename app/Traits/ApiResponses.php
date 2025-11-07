@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\Cart;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\MessageBag;
 
@@ -16,11 +15,8 @@ trait ApiResponses
         return $this->success($data, $message);
     }
 
-    /**
-     * @param  Cart|array<string, mixed>|null  $data
-     */
     protected function success(
-        array|Cart|null $data = null,
+        mixed $data = null,
         ?string $message = null,
         int $statusCode = 200
     ): JsonResponse {

@@ -12,14 +12,21 @@ it('can register new users', function () {
     ]);
 
     $response
-        ->assertStatus(200)
-        ->assertJson([
+        ->assertStatus(201)
+        ->assertExactJsonStructure([
             'data' => [
-                'token' => $response->json('data.token'),
+                'user',
+                'access_token',
+                'token_type',
             ],
-            'message' => 'Registered.',
-            'status' => 200,
-        ]);
+            'message',
+            'status',
+        ])
+        ->assertJsonPath('data.user.email', 'john@merxify.com')
+        ->assertJsonPath('data.user.first_name', 'John')
+        ->assertJsonPath('data.token_type', 'Bearer')
+        ->assertJsonPath('message', 'User registered successfully')
+        ->assertJsonPath('status', 201);
 
     $this->assertDatabaseHas('users', [
         'first_name' => 'John',
@@ -42,14 +49,13 @@ it('cannot register new users with same email', function () {
     ]);
 
     $response
-        ->assertJson([
-            'message' => 'The email has already been taken.',
-            'errors' => [
-                'email' => [
-                    'The email has already been taken.',
-                ],
-            ],
-        ]);
+        ->assertStatus(422)
+        ->assertExactJsonStructure([
+            'message',
+            'errors',
+        ])
+        ->assertJsonPath('message', 'This email is already registered')
+        ->assertJsonPath('errors.email', ['This email is already registered']);
 
     $this->assertDatabaseMissing('users', [
         'first_name' => 'John',

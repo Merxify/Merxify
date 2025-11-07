@@ -32,6 +32,7 @@ class User extends Authenticatable
         'gender',
         'group',
         'is_active',
+        'last_login_at',
     ];
 
     /**
