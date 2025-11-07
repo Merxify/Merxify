@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Auth\NewPasswordController;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Api\V1\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
+use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\ProductVariantController;
@@ -47,5 +48,13 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('addresses', AddressController::class);
         // Attribute Routes
         Route::apiResource('attributes', AttributeController::class);
+        // Cart Routes
+        Route::prefix('cart')->group(function () {
+            Route::get('/', [CartController::class, 'index']);
+            Route::post('items', [CartController::class, 'addItem']);
+            Route::put('items/{id}', [CartController::class, 'updateItem']);
+            Route::delete('items/{id}', [CartController::class, 'removeItem']);
+            Route::delete('clear', [CartController::class, 'clear']);
+        });
     });
 });
