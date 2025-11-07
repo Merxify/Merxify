@@ -17,24 +17,23 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'user',
             'id' => $this->id,
-            'attributes' => [
-                'first_name' => $this->first_name,
-                'last_name' => $this->last_name,
-                'email' => $this->email,
-                'emailVerified' => (bool) $this->email_verified_at,
-                'phone' => $this->phone,
-                'dateOfBirth' => $this->date_of_birth,
-                'gender' => $this->gender,
-                'group' => $this->group,
-                'isActive' => $this->is_active,
-                'lastLoginAt' => $this->last_login_at,
-                'registeredAt' => $this->created_at,
-            ],
-            'links' => [
-                'self' => route('users.show', ['user' => $this->id]),
-            ],
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'full_name' => $this->full_name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'date_of_birth' => $this->date_of_birth,
+            'gender' => $this->gender,
+            'group' => $this->group,
+            'is_active' => $this->is_active,
+            'email_verified_at' => (bool) $this->email_verified_at,
+            'lastLoginAt' => $this->last_login_at,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+
+            // Conditional relationships
+            'addresses' => AddressResource::collection($this->whenLoaded('addresses')),
         ];
     }
 }

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             AttributeSeeder::class,
             ProductSeeder::class,
             CartSeeder::class,
+            OrderSeeder::class,
         ]);
     }
 }
