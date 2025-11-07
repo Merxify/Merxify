@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->enum('type', ['text', 'number', 'boolean', 'select', 'multiselect', 'date', 'textarea']);
             $table->boolean('is_required')->default(false);
             $table->boolean('is_filterable')->default(false);
             $table->boolean('is_variant')->default(false); // Used for product variants
             $table->json('options')->nullable(); // For select/multiselect types
             $table->timestamps();
+
+            $table->unique(['id', 'slug']);
         });
     }
 
